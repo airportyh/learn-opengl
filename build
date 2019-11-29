@@ -1,0 +1,1 @@
+g++ -lglew -lglfw -I./glm -framework OpenGL -o program source/*.cpp
