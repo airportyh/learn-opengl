@@ -4,26 +4,25 @@
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 600
 
-GLFWwindow* glWindow = NULL;
-const char *vertexShaderCode =
-    "#version 150\n"
-    "in vec3 vert;\n"
-    "void main() {\n"
-    "    gl_Position = vec4(vert, 1);\n"
-    "}";
-GLuint vertexShaderObject;
-const char *fragmentShaderCode =
-    "#version 150\n"
-    "out vec4 finalColor;\n"
-    "void main() {\n"
-    "finalColor = vec4(1.0, 1.0, 1.0, 1.0);\n"
-    "}";
-GLuint fragmentShaderObject;
-GLuint programObject;
-GLuint vertexArrayObject;
-GLuint vertexBufferObject;
-
 int main() {
+    GLFWwindow* window = NULL;
+    GLuint program;
+    const char *vertexShaderCode =
+        "#version 150\n"
+        "in vec3 vert;\n"
+        "void main() {\n"
+        "    gl_Position = vec4(vert, 1);\n"
+        "}";
+    const char *fragmentShaderCode =
+        "#version 150\n"
+        "out vec4 finalColor;\n"
+        "void main() {\n"
+        "finalColor = vec4(1.0, 1.0, 1.0, 1.0);\n"
+        "}";
+    GLuint vertexShaderId;
+    GLuint fragmentShaderId;
+    GLuint vertexArrayId;
+    GLuint vertexBufferId;
 
     printf("Initializing application.\n");
 
@@ -38,14 +37,14 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    glWindow = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "OpenGL From Scratch", NULL, NULL);
+    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "OpenGL From Scratch", NULL, NULL);
 
-    if (!glWindow) {
+    if (!window) {
         printf("glfwCreateWindow failed.\n");
         return 1;
     }
 
-    glfwMakeContextCurrent(glWindow);
+    glfwMakeContextCurrent(window);
     if (glewInit() != GLEW_OK) {
         printf("glewInit failed.\n");
         return 1;
@@ -61,24 +60,24 @@ int main() {
         return 1;
     }
 
-    vertexShaderObject = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShaderObject, 1, (GLchar **)&vertexShaderCode, NULL);
-    glCompileShader(vertexShaderObject);
+    vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShaderId, 1, (GLchar **)&vertexShaderCode, NULL);
+    glCompileShader(vertexShaderId);
 
-    fragmentShaderObject = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShaderObject, 1, (GLchar **)&fragmentShaderCode, NULL);
-    glCompileShader(fragmentShaderObject);
+    fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShaderId, 1, (GLchar **)&fragmentShaderCode, NULL);
+    glCompileShader(fragmentShaderId);
 
-    programObject = glCreateProgram();
-    glAttachShader(programObject, vertexShaderObject);
-    glAttachShader(programObject, fragmentShaderObject);
-    glLinkProgram(programObject);
+    program = glCreateProgram();
+    glAttachShader(program, vertexShaderId);
+    glAttachShader(program, fragmentShaderId);
+    glLinkProgram(program);
 
-    glGenVertexArrays(1, &vertexArrayObject);
-    glBindVertexArray(vertexArrayObject);
+    glGenVertexArrays(1, &vertexArrayId);
+    glBindVertexArray(vertexArrayId);
 
-    glGenBuffers(1, &vertexBufferObject);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
+    glGenBuffers(1, &vertexBufferId);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 
     GLfloat vertexData[] = {
         //  X     Y     Z
@@ -92,7 +91,7 @@ int main() {
     };
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
-    GLint vertAttribute = glGetAttribLocation(programObject, "vert");
+    GLint vertAttribute = glGetAttribLocation(program, "vert");
 
     glEnableVertexAttribArray(vertAttribute);
     glVertexAttribPointer(vertAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL);
@@ -100,30 +99,18 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-
-    while(!glfwWindowShouldClose(glWindow)) {
+    while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
 
-        glClearColor(1, 0, 0, 1); // black
+        glClearColor(1, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // bind the program (the shaders)
-        glUseProgram(programObject);
-
-
-        glBindVertexArray(vertexArrayObject);
-
-        // draw the VAO
+        glUseProgram(program);
+        glBindVertexArray(vertexArrayId);
         glDrawArrays(GL_TRIANGLES, 0, 6);
-
-        // unbind the VAO
         glBindVertexArray(0);
-
-        // unbind the program
         glUseProgram(0);
-
-        // swap the display buffers (displays what was just drawn)
-        glfwSwapBuffers(glWindow);
+        glfwSwapBuffers(window);
     }
 
     glfwTerminate();
