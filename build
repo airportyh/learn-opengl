@@ -1,1 +1,1 @@
-g++ -lglew -lglfw -I./glm -framework OpenGL -o program source/*.cpp
+gcc -lglew -lglfw -framework OpenGL -o ${1%.cpp}.bin $1
