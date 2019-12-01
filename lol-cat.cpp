@@ -94,7 +94,7 @@ int main() {
     glAttachShader(program, fragmentShaderId);
     glLinkProgram(program);
 
-    imagePixels = stbi_load("hazard.png", &imageWidth, &imageHeight, &imageChannels, 0);
+    imagePixels = stbi_load("lol-cat.jpg", &imageWidth, &imageHeight, &imageChannels, 0);
 
     printf("Loaded %dx%d image\n", imageWidth, imageHeight);
 
@@ -133,13 +133,13 @@ int main() {
 
     GLfloat vertexData[] = {
         //  X     Y     Z       U     V
-         -1.0f, -1.0f, 0.0f,   0.5f, 1.0f,
-         1.0f, 1.0f, 0.0f,   0.0f, 0.0f,
+         -1.0f, -1.0f, 0.0f,   0.0f, 0.0f,
+         1.0f, 1.0f, 0.0f,   1.0f, 1.0f,
          1.0f,-1.0f, 0.0f,   1.0f, 0.0f,
 
-         -1.0f, -1.0f, 0.0f,   0.5f, 1.0f,
-         -1.0f, 1.0f, 0.0f,   0.0f, 0.0f,
-         1.0f,1.0f, 0.0f,   1.0f, 0.0f,
+         -1.0f, -1.0f, 0.0f,   0.0f, 0.0f,
+         -1.0f, 1.0f, 0.0f,   0.0f, 1.0f,
+         1.0f,1.0f, 0.0f,   1.0f, 1.0f,
     };
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
@@ -160,7 +160,7 @@ int main() {
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
 
-        glClearColor(1, 0, 0, 1);
+        glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
         glUseProgram(program);

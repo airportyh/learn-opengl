@@ -1,1 +1,1 @@
-gcc -lglew -lglfw -framework OpenGL -o ${1%.cpp}.bin $1
+gcc -lglew -lglfw -I/usr/local/Cellar/glm/0.9.9.5/include/glm/ -framework OpenGL -o ${1%.cpp}.bin $1
