@@ -61,11 +61,11 @@ int main() {
     }
 
     vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShaderId, 1, (GLchar **)&vertexShaderCode, NULL);
+    glShaderSource(vertexShaderId, 1, &vertexShaderCode, NULL);
     glCompileShader(vertexShaderId);
 
     fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShaderId, 1, (GLchar **)&fragmentShaderCode, NULL);
+    glShaderSource(fragmentShaderId, 1, &fragmentShaderCode, NULL);
     glCompileShader(fragmentShaderId);
 
     program = glCreateProgram();
