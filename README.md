@@ -18,6 +18,9 @@ You may need to change that if your location is different. You can find out via:
 brew list glm
 ```
 
+Also, a shoutout to the [nothings/stb](https://github.com/nothings/stb) for supplying
+the single-header-file `stb_image.h` used to read image files!
+
 ## Resources
 
 These are the resources I am currently using to learn:
