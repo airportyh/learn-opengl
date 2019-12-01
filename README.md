@@ -2,7 +2,7 @@
 
 I am learning OpenGL and these are some of my exercise programs and the
 build script I used to compile them on my Mac. I've used Homebrew to
-instead the required libraries:
+install the required libraries:
 
 ```
 brew install glew
@@ -12,7 +12,7 @@ brew install glm
 
 It hard-links the location of the glm include files at: `/usr/local/Cellar/glm/0.9.9.5/include/glm/`
 in the `build` script.
-You made need to change that if your location is different. You can find out via:
+You may need to change that if your location is different. You can find out via:
 
 ```
 brew list glm
